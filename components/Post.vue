@@ -73,7 +73,7 @@
               class="flex items-center gap-1"
             >
               <Icon
-                name="MDI:cards-heart-outline"
+                name="mdi:cards-heart-outline"
                 size="28"
                 class="p-1 text-white hover:bg-gray-800 rounded-full cursor-pointer"
               />
@@ -93,20 +93,28 @@
         <div class="flex items-center flex-wrap text-white gap-1 w-[42px]">
           <div class="flex gap-0.5">
             <img
-              src="https://picsum.phoptos/id/202/50"
+              src="https://picsum.photos/id/202/50"
               alt=""
               class="rounded-full h-[14px] mt-2"
             >
             
             <img
-              src="https://picsum.phoptos/id/202/50"
+              src="https://picsum.photos/id/223/50"
               alt=""
               class="rounded-full h-[14px] mt-2"
+            >
+          </div>
+          <div class="flex items-center">
+            <img 
+              src="http://picsum.photos/id/99/50" 
+              alt=""
+              class="rounded-full h-[11px] ml-4"
             >
           </div>
         </div>
       </div>
     </div>
+    <div class="h-[1px] bg-gray-800 w-full mt-3" />
   </div>
 </template>
 

@@ -5,3 +5,8 @@
     </NuxtLayout>
   </div>
 </template>
+
+<script setup>
+import { useUserStore } from './stores/user'
+const useUser = useUserStore()
+</script>

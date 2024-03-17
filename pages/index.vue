@@ -31,7 +31,10 @@ let isLoading = ref(false)
 onBeforeMount(() => {
   posts.value = [
     {
-      name: 'saman'
+      name: 'Saman Sahraei',
+      image: 'http://placehold.co/100',
+      text: 'This is a title',
+      picture: 'http://placehold.co/100'
     }
   ]
 })
