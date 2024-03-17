@@ -10,7 +10,6 @@
       <div
         v-for="post in posts"
         :key="post"
-        class="text-white"
       >
         <Post
           :post="post"
@@ -29,7 +28,6 @@ let posts = ref([])
 let isPosts = ref(true)
 let isLoading = ref(false)
 
-console.log('index page user store',userStore);
 onBeforeMount(() => {
   posts.value = [
     {
