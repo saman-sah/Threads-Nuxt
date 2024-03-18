@@ -36,7 +36,7 @@
           />
         </button>
         <button
-          @click="useStore.isMenuOverlay = true"
+          @click="userStore.isMenuOverlay = true"
           class="w-full h-full"
         >
           <Icon 
@@ -47,7 +47,7 @@
           />
         </button>
         <button
-          @click="useStore.isLogoutOverlay = true"
+          @click="userStore.isLogoutOverlay = true"
           class="w-full h-full"
         >
           <Icon 
@@ -65,6 +65,5 @@
 <script setup>
 import { useUserStore } from "~/stores/user"
 const userStore = useUserStore()
-
-console.log('userStore', userStore.posts);
+console.log('userStore', userStore);
 </script>
