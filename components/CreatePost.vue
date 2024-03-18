@@ -37,9 +37,79 @@
               </div>
             </div>
           </div>
+          <div class="relative flex items-center w-full">
+            <div class="w-[42px] mx-auto">
+              <div class="absolute ml-4 mt-1 top-0 w-[1px] bg-gray-700 h-full" />
+            </div>
+            <div class="bg-black rounded-lg w-[calc(100%-50px)] text font-light">
+              <div class="pt-2 text-gray-300 bg-black w-full">
+                <textarea
+                  v-model="text"
+                  style="resize: none;"
+                  placeholder="Start a thread..."
+                  name="" 
+                  id="textarea"
+                  @input="adjustTextareaHeight()"
+                  class="w-full bg-black outline-none"
+                />
+              </div>
+              <div class="w-full">
+                <div class="flex flex-col gap-2 py-1">
+                  <div v-if="fileDisplay">
+                    <img 
+                      :src="fileDisplay" 
+                      alt=""
+                      class="mx-auto w-full mt-2 rounded-lg"
+                    >
+                  </div>
+                  <label for="fileInput">
+                    <Icon 
+                      name="clarity:paperclip-line"
+                      color="#ffffff"
+                      size="25"
+                    />
+                    <input 
+                      ref="file"
+                      type="file"
+                      id="fileInput"
+                      @input="onChange"
+                      hidden
+                      accept=".jpg, .jpeg, .png"
+                    />
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
+      <div
+        v-if="text" 
+        class="fixed bottom-24 w-full max-w-[500px] items-center justify-center text-center p-4 border-t border-t-gray-700"
+      >
+        <button
+         
+          :disabled="isLoading"
+          :class="[
+            isLoading ? 'text-gray-600' : 'text-blue-600',
+            'flex font-bold text-lg p-2 mx-auto'
+          ]"
+        >
+          <div v-if="!isLoading">
+            Post
+          </div>
+          <div
+            v-else
+            class="flex items-center gap-2 justify-center"
+          >
+            <Icon
+              name="eos-icons:bubble-loading"
+              size="25"
+            />
+            Please wait...
+          </div>
+        </button>
+      </div>
     </div>
   </div>
 </template>

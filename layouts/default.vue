@@ -65,5 +65,4 @@
 <script setup>
 import { useUserStore } from "~/stores/user"
 const userStore = useUserStore()
-console.log('userStore', userStore);
 </script>
