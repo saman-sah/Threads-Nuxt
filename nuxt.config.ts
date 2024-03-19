@@ -15,7 +15,7 @@ export default defineNuxtConfig({
   },
   modules: [
     'nuxt-icon',
-    // '@nuxtjs/supabase',
+    '@nuxtjs/supabase',
     '@pinia/nuxt',
     '@vite-pwa/nuxt'
   ]
