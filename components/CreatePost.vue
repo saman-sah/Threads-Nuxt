@@ -26,7 +26,10 @@
       >
         <div class="py-2 w-full">
           <div class="flex items-center">
-            <div class="flex items-center text-white">
+            <div
+              v-if="user"
+              class="flex items-center text-white"
+            >
               <img 
                 src="https://picsum.photos/id/223/50" 
                 alt=""
@@ -118,8 +121,8 @@
 import { v4 as uuidv4 } from 'uuid'
 import { useUserStore } from '~/stores/user'
 const userStore = useUserStore()
-// const client = useSupabaseClient()
-// const user = useSupabaseUser()
+const client = useSupabaseClient()
+const user = useSupabaseUser()
 
 let file= ref(null)
 let text = ref(null)

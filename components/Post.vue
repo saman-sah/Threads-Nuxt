@@ -15,9 +15,12 @@
         </div>
 
         <div
+          v-if="user && user.identities && user.identities[0].user_id === post.userId"
           @click="isMenu = !isMenu"
           class="relative"
         >
+        <div class="text-white">
+        </div>
           <button
             :disabled="isDeleting"
             :class="[
@@ -63,7 +66,7 @@
           </div>
           <img
             v-if="post.picture"
-            :src="post.picture" 
+            :src="BUCKET + post.picture" 
             alt="Picture of Post"
             class="mx-auto w-full mt-2 pr-2 rounded"
           >
@@ -120,12 +123,17 @@
 
 <script setup>
 import { useUserStore } from "~/stores/user"
-const userStore = useUserStore()
 
+const user = useSupabaseUser()
+const userStore = useUserStore()
+const client = useSupabaseClient()
 const runTimeConfig = useRuntimeConfig()
+const BUCKET = runTimeConfig.public.backetUrl
+
 let isMenu = ref(false)
 let isLike = ref(false)
 let isDeleting = ref(false)
+
 defineProps({
   post: {
     type: Object,
@@ -137,6 +145,5 @@ const emits = defineEmits([
   'isDeleted'
 ])
 
-// const client = useSupabaseClient()
-// const user = useSupabaseUser()
+
 </script>

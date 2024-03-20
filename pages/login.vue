@@ -11,7 +11,7 @@
           class="w-[35px]"
         >
         <span class="font-bold text-2xl text-white">
-          Threads{{  user }}dfdf
+          Threads
         </span>
       </div>
       <div class="max-w-[350px] mx-auto px-2 text-white">
@@ -32,7 +32,21 @@
               alt="github logo"
               class="w-full max-w-[30px] rounded-full"
             >
-            Github
+            Sign In
+          </div>
+        </button>
+        <button
+          @click="signUpNewUser" 
+          class="flex items-center justify-center gap-3 p-1.5 w-full border rounded-full text-lg font-semibold"
+        >
+          <div class="flex items-center gap-2 justify-center">
+            
+            <img 
+              src="/github-logo.png" 
+              alt="github logo"
+              class="w-full max-w-[30px] rounded-full"
+            >
+            Sign Up
           </div>
         </button>
       </div>
@@ -76,6 +90,8 @@ async function signUpNewUser() {
     const { data, error } = await client.auth.signUp({
       email: userData.email,
       password: userData.password,
+      fullname: 'Saman Sahraei',
+      avatar: 'http://picsum.photos/id/99/50',
       options: {
         emailRedirectTo: '/',
       },
