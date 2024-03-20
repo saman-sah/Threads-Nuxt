@@ -91,7 +91,7 @@
         class="fixed bottom-24 w-full max-w-[500px] items-center justify-center text-center p-4 border-t border-t-gray-700"
       >
         <button
-         
+          @click="creatPost" 
           :disabled="isLoading"
           :class="[
             isLoading ? 'text-gray-600' : 'text-blue-600',
@@ -147,5 +147,49 @@ const clearData = () => {
 const onChange = () => {
   fileDisplay.value = URL.createObjectURL(file.value.files[0])
   fileData.value =file.value.files[0]
+}
+
+const creatPost = async () => {
+  let dataOut = null;
+  let errorOut = null;
+  isLoading.value = true
+  if(fileData.value) {
+    const { data, error } = await client.storage
+    .from('threads-nuxt')
+    .upload(`${uuidv4}.jpg`, fileData.value)
+
+    dataOut = data;
+    errorOut = error;
+  }
+  if(errorOut) {
+    console.log(errorOut)
+    return errorOut
+  }
+
+  let pic =''
+  if(dataOut) {
+    pic = dataOut.path ? dataOut.path : ''
+  }
+
+  try {
+    await useFetch('/api/create-post', {
+      method: 'POST',
+      body: {
+        userId: userInfo.userId,
+        name: userInfo.fullname,
+        image: userInfo.image,
+        text: text.value,
+        picture: pic
+      }
+    })
+
+    await userStore.getAllPosts()
+    userStore.isMenuOverlay = false;
+    clearData();
+    isLoading.value = false
+  } catch (error) {
+    console.log('error', error);
+    isLoading = false
+  }
 }
 </script>
