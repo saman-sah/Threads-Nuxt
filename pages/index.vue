@@ -13,7 +13,7 @@
       >
         <Post
           :post="post"
-          @isDeleted="posts = []"
+          @isDeleted="posts = userStore.getAllPosts"
         />
       </div>
     </div>
@@ -82,17 +82,21 @@ onBeforeMount(async () => {
 
 onMounted(() => {
   watchEffect(() => {
+    posts.value = userStore.posts
     if (userStore.posts && userStore.posts.length ) {
-        posts.value = userStore.posts
         isPosts.value = true
+    } else {
+      isPosts.value =false
     }
   })
 })
 
 watch(() => posts.value, () => {
+  posts.value = userStore.posts
   if (userStore.posts && userStore.posts.length ) {
-        posts.value = userStore.posts
-        isPosts.value = true
-    }
+      isPosts.value = true
+  } else {
+    isPosts.value =false
+  }
 }, {deep: true})
 </script>

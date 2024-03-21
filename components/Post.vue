@@ -65,7 +65,7 @@
         </div>
         <div class="bg-black rounded-lg w-[calc(100% - 50px)] text-sm w-full font-light">
           <div class="py-2 text-gray-300">
-            {{ post.text }}
+            {{ post.text }} {{ post }}
           </div>
           <img
             v-if="post.picture"
@@ -76,17 +76,34 @@
           <div class="absolute mt-2 w-full ml-2">
             <button
               :disabled="isLike"
+              @click="likeFunk"
               class="flex items-center gap-1"
             >
               <Icon
+                v-if="!hasLikedComputed"
                 name="mdi:cards-heart-outline"
                 size="28"
                 class="p-1 text-white hover:bg-gray-800 rounded-full cursor-pointer"
               />
+              <Icon
+                v-else
+                name="mdi:cards-heart"
+                size="28"
+                class="p-1 text-red-500 hover:bg-gray-800 rounded-full cursor-pointer"
+              />
             </button>
             <div class="relative text-sm text-gray-500">
               <div>
-                <span>4</span>
+                <span v-if="!isLike">
+                  {{ post.likes.length }}
+                </span>
+                <span v-else>
+                  <Icon
+                    name="eos-icons:bubble-loading"
+                    color="#ffffff"
+                    size="13"
+                  />
+                </span>
                 likes
               </div>
             </div>
@@ -153,7 +170,7 @@ const hasLikedComputed = computed(() => {
   let res =false
 
   props.post.likes.forEach(like => {
-    if(like.userId === userInfo.userId && like.postId === props.post.id) {
+    if (like.userId == user.value.identities[0].user_id && like.postId == props.post.id) {
       res = true
     }
   });
@@ -183,4 +200,55 @@ const deletePost = async (id, picture) => {
   }
 }
 
+const likePost = async (id) => {
+  isLike.value = true;
+  try {
+    await $fetch('/api/like/', {
+      method: 'POST',
+      body: {
+        userId: user.value.identities[0].user_id,
+        postId: id
+      }
+    })
+    await userStore.getAllPosts()
+    isLike.value = false
+  } catch (error) {
+    console.log('error', error);
+    isLike.value - false
+  }
+}
+
+const disLikePost = async (id) => {
+  isLike.value = true;
+  try {
+    await $fetch(`/api/unlike-post/${id}`, {
+      method: 'DELETE'
+    })
+    await userStore.getAllPosts()
+    isLike.value = false
+  } catch (error) {
+    console.log('error', error);
+    isLike.value - false
+  }
+}
+
+const likeFunk = () => {
+  let likePostObj = null
+  if(props.post.likes.length < 1) {
+    likePost(props.post.id)
+    return null
+  } else {
+    props.post.likes.forEach(like => {
+      if(like.userId === user.value.identities[0].user_id && like.postId == props.post.id) {
+        likePostObj = like
+      }
+    })
+  }
+
+  if(likePostObj) {
+    disLikePost(likePostObj.id)
+    return null
+  }
+  likePost(props.post.id)
+}
 </script>

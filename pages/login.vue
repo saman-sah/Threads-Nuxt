@@ -178,7 +178,7 @@ async function signUpNewUser() {
     if(fileData.value) {
       const { data, error } = await client.storage
       .from('threads-nuxt')
-      .upload(`${uuidv4}.jpg`, fileData.value)
+      .upload(`dfsdfsdfsed.jpg`, fileData.value)
 
       dataOut = data;
       errorOut = error;
@@ -189,8 +189,8 @@ async function signUpNewUser() {
     }
 
     let pic =''
+    console.log('data.user.value', data.user.valueuserId);
     let userId = data.user.value.identities[0].user_id
-    console.log('userId', userId);
     if(dataOut) {
       pic = dataOut.path ? dataOut.path : ''
     }
