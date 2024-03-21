@@ -45,7 +45,10 @@
             v-if="isMenu"
             class="absolute border border-gray-600 right-0 z-20 mt-1 rounded"
           >
-            <button class="flex items-center rounded gap-2 text-red-500 justify-between bg-black w-full pl-4 pr-3 py-1 hover:bg-gray-900">
+            <button
+              @click="deletePost(post.id, post.picture)"
+              class="flex items-center rounded gap-2 text-red-500 justify-between bg-black w-full pl-4 pr-3 py-1 hover:bg-gray-900"
+            >
               <div>Delete</div>
               <Icon
                 name="solar:trash-bin-trash-broken"
@@ -134,7 +137,7 @@ let isMenu = ref(false)
 let isLike = ref(false)
 let isDeleting = ref(false)
 
-defineProps({
+const props = defineProps({
   post: {
     type: Object,
     default: {}
@@ -145,5 +148,39 @@ const emits = defineEmits([
   'isDeleted'
 ])
 
+const hasLikedComputed = computed(() => {
+  if(!user.value) return
+  let res =false
+
+  props.post.likes.forEach(like => {
+    if(like.userId === userInfo.userId && like.postId === props.post.id) {
+      res = true
+    }
+  });
+  return res
+})
+
+const deletePost = async (id, picture) => {
+  let res = confirm('Are you sure you want to delete this post?')
+
+  if(!res) return
+
+  try {
+    isMenu.value = false
+    isDeleting.value = true
+    const { data, error } = await client.storage
+      .from('threads-nuxt')
+      .remove([picture])
+    emits('isDeleted'), true
+
+    isDeleting.value = false
+    await useFetch(`/api/delete-post/${id}`, {
+      method: 'DELETE'
+    })
+  } catch (error) {
+    console.log('error', error);
+    isDeleting = false
+  }
+}
 
 </script>

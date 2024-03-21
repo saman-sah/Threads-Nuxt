@@ -150,36 +150,36 @@ const onChange = () => {
 }
 
 const creatPost = async () => {
-  let dataOut = null;
-  let errorOut = null;
-  isLoading.value = true
-  if(fileData.value) {
-    const { data, error } = await client.storage
-    .from('threads-nuxt')
-    .upload(`${uuidv4}.jpg`, fileData.value)
+  // let dataOut = null;
+  // let errorOut = null;
+  // isLoading.value = true
+  // if(fileData.value) {
+  //   const { data, error } = await client.storage
+  //   .from('threads-nuxt')
+  //   .upload(`${uuidv4}.jpg`, fileData.value)
 
-    dataOut = data;
-    errorOut = error;
-  }
-  if(errorOut) {
-    console.log(errorOut)
-    return errorOut
-  }
+  //   dataOut = data;
+  //   errorOut = error;
+  // }
+  // if(errorOut) {
+  //   console.log(errorOut)
+  //   return errorOut
+  // }
 
-  let pic =''
-  if(dataOut) {
-    pic = dataOut.path ? dataOut.path : ''
-  }
+  // let pic =''
+  // if(dataOut) {
+  //   pic = dataOut.path ? dataOut.path : ''
+  // }
 
   try {
-    await useFetch('/api/create-post', {
+    await useFetch('/api/post', {
       method: 'POST',
       body: {
-        userId: userInfo.userId,
-        name: userInfo.fullname,
-        image: userInfo.image,
+        userId: user.value.identities[0].user_id,
+        name: 'Saman Sahraei',
+        image: '',
         text: text.value,
-        picture: pic
+        picture: ''
       }
     })
 

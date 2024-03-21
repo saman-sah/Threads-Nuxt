@@ -6,9 +6,9 @@ export const useUserStore = defineStore('user', () => {
   const isLogoutOverlay =ref(false)
 
   async function getAllPosts() {
-    let res = await useFetch('/api/get-posts')
-    posts.value = res.data
-    return res.data
+    let res = await $fetch('/api/posts')
+    posts.value = res
+    return res
   }
 
   return {

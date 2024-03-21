@@ -42,7 +42,7 @@ const client = useSupabaseClient()
 async function signOut() {
   console.log('sign out');
   const { error } = await client.auth.signOut()
-  useStorage.isLogoutOverlay = false
+  userStore.isLogoutOverlay = false
   return navigateTo('/')
 }
 

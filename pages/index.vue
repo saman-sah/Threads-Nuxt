@@ -3,8 +3,6 @@
     id="IndexPage"
     class="w-full overflow-auto"
   >
-  <div class="text-white">
-  </div>
     <div
       v-if="isPosts"
       class="mx-auto max-w-[500px] overflow-hidden"

@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
       id: "desc"
     },
     include: {
-      linkes: true
+      likes: true
     }
   })
   return posts
